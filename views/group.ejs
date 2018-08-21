@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Futiba Club - Fullstack Academy - DevPleno</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="../css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/futiba-interno.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-light green fixed-top scrolling-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="../img-futiba-club/logo.png" height="30" alt="Futiba Club">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+                    <% include elements/menu-items %>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="content">
+        <div class="container">
+            <div class="row my-container-form mt-4">
+                <div class="col" method="POST">
+                    <p class="h5 text-center mb-4">Grupo: <%= group.name %></p>
+                </div>
+                <% if(group.role === 'owner'){ %>
+                    <% if(pendings.length > 0){ %>
+                        <div class="my-container-table mt-4">
+                            <h2>Pendências do Grupo</h2>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Usuários</th>
+                                        <th></th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% pendings.forEach(user => { %>
+                                        <tr>
+                                            <th scope="row"><%= user.id %></th>
+                                            <td>
+                                                <div class="my-houver-link">
+                                                    <a href="/groups/<%= user.id %>">
+                                                        <%= user.name %>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td><%= user.role %></td>
+                                            <td>
+                                                <a href="/groups/<%= group.id %>/pending/<%= user.id %>/yes">                                                
+                                                    <i class="fas fa-thumbs-up prefix white-text my-circle-icon-yes"></i>
+                                                </a>
+                                                <a href="/groups/<%= group.id %>/pending/<%= user.id %>/no">
+                                                    <i class="fas fa-thumbs-down prefix white-text my-circle-icon-no"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% }else{ %>
+                        <div class="my-container-info mt-4">
+                            <p class="alert alert-info width=100%" role="alert">Nenhum usuário pendente.</p>
+                        </div>
+                    <% } %>
+                <% } %>
+                <% if(group.role === 'pending'){ %>
+                    <div class="my-container-info mt-4">
+                        <p class="alert alert-danger width=100%" role="alert">Você precisa ser aprovado pelo administrador do grupo.</p>
+                    </div>
+                <% }else{ %>
+                    <div class="my-container-table mt-4">
+                        <h2>Palpites dos Jogos</h2>
+                        <form method="POST">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Jogos</th>
+                                        <th>Pontuação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% games.forEach(game => { %>
+                                        <tr>
+                                            <td>
+                                                <div class="container-guessing">
+                                                    <% if(game.guess_a){ %>
+                                                        <%= game.team_a %>
+                                                        <div class="number-guess">
+                                                            <%= game.guess_a %>
+                                                        </div>
+                                                        <div class="versos1">
+                                                            <strong>VS</strong>
+                                                        </div>
+                                                    <% }else{ %>
+                                                        <div class="input-group input-group-sm col-5">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="inputGroup-sizing-sm"><%= game.team_a %></span>
+                                                            </div>
+                                                            <input type="number" class="my-input form-control" name="team_<%= game.id %>[a]">
+                                                        </div>
+                                                        <div class="versos2">
+                                                            <strong>VS</strong>
+                                                        </div>
+                                                    <% } %>
+                                                    
+                                                    <% if(game.guess_b){ %>
+                                                        <%= game.team_b %>
+                                                        <div class="number-guess">
+                                                            <%= game.guess_b %>
+                                                        </div>
+                                                    <% }else{ %>
+                                                        <div class="input-group input-group-sm col-5">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="inputGroup-sizing-sm"><%= game.team_b %></span>
+                                                            </div>
+                                                            <input type="number" class="my-input form-control" name="team_<%= game.id %>[b]">
+                                                        </div>
+                                                    <% } %>
+                                                </div>
+                                            </td>
+                                            <td><%= game.score %></td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <input class="btn btn-deep-orange" type="submit" value="Salvar apostas">
+                            </div>
+                        </form>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <footer class="page-footer center-on-small-only">
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © 2018 Projeto desenvolvido durante o Fullstack Academy - <a href="https://www.devpleno.com">DevPleno</a>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+</body>
+</html>

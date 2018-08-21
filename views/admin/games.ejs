@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Futiba Club - Fullstack Academy - DevPleno</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="../css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/futiba-interno.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-light green fixed-top scrolling-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="../img-futiba-club/logo.png" height="30" alt="Futiba Club">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+                    <% include ../elements/menu-items %>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="content">
+        <div class="container">
+            <div class="row my-container-form mt-4">
+                <form class="col" method="POST">
+                        <p class="h5 text-center mb-4">Gerenciamento de Jogos</p>
+                    <div class="md-form">
+                        <i class="fa fa-futbol prefix grey-text"></i>
+                        <input type="text" class="form-control" name="team_a">
+                        <label for="orangeForm-name">Time A</label>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="far fa-futbol prefix grey-text"></i>
+                        <input type="text" class="form-control" name="team_b">
+                        <label for="orangeForm-name">Time B</label>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-deep-orange">Criar jogo</button>
+                    </div>
+                </form>
+
+                <% if(games.length > 0){ %>
+                    <div class="my-container-table mt-4">
+                        <h2>Classificação dos Grupos</h2>
+                        <form method="POST" action="../admin/games/results">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Jogos</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% games.forEach(game => { %>
+                                        <tr>
+                                            <th scope="row"><%= game.id %></th>
+                                            <td>
+                                                <div class="container-guessing">
+                                                    <div class="input-group input-group-sm col-5">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroup-sizing-sm"><%= game.team_a %></span>
+                                                        </div>
+                                                        <input type="number" class="my-input form-control" name="team_<%= game.id %>[a]">
+                                                    </div>
+                                                    <div class="versos2">
+                                                        <strong>VS</strong>
+                                                    </div>
+                                                    <div class="input-group input-group-sm col-5">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroup-sizing-sm"><%= game.team_b %></span>
+                                                        </div>
+                                                        <input type="number" class="my-input form-control" name="team_<%= game.id %>[b]">
+                                                    </div>
+                                                    <!--<%= game.team_a %> <strong>VS</strong> <%= game.team_b %>-->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/games/delete/<%= game.id %>">
+                                                    Excluir
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <button class="btn btn-deep-orange">Informar resultados</button>
+                            </div>
+                        </form>
+                    </div>
+                <% }else{ %>
+                    <div class="my-container-info mt-4">
+                        <p class="alert alert-info width=100%" role="alert">Nenhum jogo cadastrado</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <footer class="page-footer center-on-small-only">
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © 2018 Projeto desenvolvido durante o Fullstack Academy - <a href="https://www.devpleno.com">DevPleno</a>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+    </body>
+</html>

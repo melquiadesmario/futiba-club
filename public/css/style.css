@@ -1,0 +1,72 @@
+/* Your custom styles */
+.my-container-form{
+    margin-right: auto;
+    margin-left: auto;
+    width: 60%;
+}
+
+.my-container-table{
+    background-color: rgba(0,0,0,0.03);
+    padding: 1.5rem;
+    width: 100%;
+}
+
+table td{
+    font-size: 1rem;
+}
+
+.my-container-info{
+    width: 100%;
+}
+
+.my-houver-link:hover{
+    background-color: rgba(255,62,1,0.3);
+}
+
+.my-circle-icon-yes{
+    background-color: #0062cc;
+    border-radius: 16px;
+    padding: 0.5rem;
+}
+
+.my-circle-icon-yes:hover{
+    background-color: #7e93a9;
+}
+
+.my-circle-icon-no{
+    background-color: #dc3545;
+    border-radius: 16px;
+    padding: 0.5rem;
+}
+
+.my-circle-icon-no:hover{
+    background-color: #d4989e;
+}
+
+.container-guessing{
+    display: flex;
+}
+
+.input-group .form-control{
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.versos1{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.versos2{
+    margin-top: 1rem;
+    font-size: 1.1rem;
+}
+
+.my-span1{
+    font-size: 16px;
+}
+
+.number-guess{
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
